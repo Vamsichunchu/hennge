@@ -1,0 +1,25 @@
+import sys
+from functools import reduce
+
+def calc_total(count, values_line):
+    values = list(map(int, values_line.split()))
+    if len(values) != count:
+        return -1
+    return reduce(lambda s, v: s + (v ** 4 if v <= 0 else 0), values, 0)
+
+def go_through(data, out=[]):
+    if not data:
+        return out
+    x = int(data[0])
+    y_line = data[1]
+    return go_through(data[2:], out + [calc_total(x, y_line)])
+
+def main():
+    stuff = sys.stdin.read().splitlines()
+    total_cases = int(stuff[0])
+    lines = stuff[1:]
+    result = go_through(lines)
+    print('\n'.join(map(str, result)))
+
+if __name__ == "__main__":
+    main()
